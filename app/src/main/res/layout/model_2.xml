@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="affichagebouton1" type="com.example.testappandoid.model.Donner"/>
+        <variable name="affichagebouton2" type="com.example.testappandoid.model.Donner"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageButton
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/imageButton5"
+                loadImageUrl="@{affichagebouton1.image}"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.0"/>
+        <TextView
+                android:text="@{affichagebouton1.text}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/textView5"
+                app:layout_constraintEnd_toEndOf="@+id/imageButton"
+                app:layout_constraintStart_toStartOf="@+id/imageButton"
+                app:layout_constraintTop_toTopOf="@+id/imageButton"
+                app:layout_constraintBottom_toBottomOf="@+id/imageButton" android:textStyle="bold"
+                android:textAllCaps="true"
+                android:fontFamily="sans-serif" android:textColor="#FF0000"
+        />
+        <ImageButton
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/imageButton"
+                loadImageUrl="@{affichagebouton2.image}"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.258"/>
+        <TextView
+                android:text="@{affichagebouton2.text}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/textView1"
+                app:layout_constraintEnd_toEndOf="@+id/imageButton"
+                app:layout_constraintStart_toStartOf="@+id/imageButton"
+                app:layout_constraintTop_toTopOf="@+id/imageButton"
+                app:layout_constraintBottom_toBottomOf="@+id/imageButton" android:textStyle="bold"
+                android:textAllCaps="true"
+                android:fontFamily="sans-serif" android:textColor="#FF0000"
+                app:layout_constraintVertical_bias="0.503"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

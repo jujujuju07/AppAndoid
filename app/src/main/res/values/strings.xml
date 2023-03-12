@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TestAppAndoid</string>
+    <string name="message">message</string>
+    <string name="connection">connection</string>
+    <string name="send">send</string>
+
+</resources>

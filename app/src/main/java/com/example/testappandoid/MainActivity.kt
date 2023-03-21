@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             val gridview = binding.gridview
             gridview.numColumns = comunication.DonnerAll.Donner.size / comunication.DonnerAll.line.toInt()
             Log.println(Log.INFO,"Donner","passe")
-            gridview.setAdapter(ImageAdapter(test,list))
+            gridview.setAdapter(ImageAdapter(test,list,comunication))
             Log.println(Log.INFO,"Donner","passe")
         }
             /*var marche = false

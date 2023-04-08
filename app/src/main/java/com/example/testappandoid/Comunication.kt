@@ -11,7 +11,9 @@ import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintStream
+import java.net.DatagramPacket
 import java.net.InetAddress
+import java.net.MulticastSocket
 import java.net.Socket
 
 
@@ -29,8 +31,20 @@ class Comunication(private var mainActivity: MainActivity) {
 
     fun conection(){
         GlobalScope.launch {
+            val multicastSocket = MulticastSocket(4446)
+
+            val multicastGroup = InetAddress.getByName("224.0.0.107")
+            multicastSocket.joinGroup(multicastGroup)
+
+            val buffer = ByteArray(1024)
+            val packet = DatagramPacket(buffer, buffer.size)
+
+            multicastSocket.receive(packet)
+            val message = String(packet.data, 0, packet.length)
+
+
             var port = 1222
-            var address = InetAddress.getByName("192.168.1.17")
+            var address = InetAddress.getByName(message)
             try {
                 socket = Socket(address,port)
                 entre = BufferedReader(InputStreamReader(socket.getInputStream()))

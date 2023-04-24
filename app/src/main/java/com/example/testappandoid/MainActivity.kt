@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.Main){
             withContext(Dispatchers.IO) {
-                Thread.sleep(1000)
+                Thread.sleep(5000)
             }
             Thread.sleep(1000)
             Log.println(Log.INFO,"Donner","passe")

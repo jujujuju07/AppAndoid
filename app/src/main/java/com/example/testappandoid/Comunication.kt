@@ -1,5 +1,6 @@
 package com.example.testappandoid
 
+import android.content.Intent
 import android.util.Log
 import com.example.testappandoid.databinding.ActivityMainBinding
 import com.example.testappandoid.model.Donner
@@ -9,12 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStreamReader
 import java.io.PrintStream
 import java.net.DatagramPacket
 import java.net.InetAddress
 import java.net.MulticastSocket
 import java.net.Socket
+import javax.security.auth.login.LoginException
 
 
 class Comunication(private var mainActivity: MainActivity) {
@@ -31,20 +34,40 @@ class Comunication(private var mainActivity: MainActivity) {
 
     fun conection(){
         GlobalScope.launch {
+            var message = "";
+            var connexion_multicast = false;
             val multicastSocket = MulticastSocket(4446)
 
-            val multicastGroup = InetAddress.getByName("224.0.0.107")
+            val multicastGroup = InetAddress.getByName("224.0.0.1")
             multicastSocket.joinGroup(multicastGroup)
 
             val buffer = ByteArray(1024)
             val packet = DatagramPacket(buffer, buffer.size)
+            GlobalScope.launch {
+                Thread.sleep(5000)
+                if (!connexion_multicast){
+
+
+                    connection("10.0.0.109")
+                }
+            }
 
             multicastSocket.receive(packet)
-            val message = String(packet.data, 0, packet.length)
+            message = String(packet.data, 0, packet.length)
+            Log.i("ip",message + " " + packet.length + " " + message.length)
+            //println("Message reçu : $message")
+            connexion_multicast = true
+            connection(message)
 
+        }
+
+    }
+
+    fun connection(ip:String){
+        GlobalScope.launch {
 
             var port = 1222
-            var address = InetAddress.getByName(message)
+            var address = InetAddress.getByName("10.0.0.109")
             try {
                 socket = Socket(address,port)
                 entre = BufferedReader(InputStreamReader(socket.getInputStream()))
@@ -53,13 +76,16 @@ class Comunication(private var mainActivity: MainActivity) {
                     socket(socket,entre,sortie)
                 }
                 marche = true
+                //conect = true
 
             }catch (e:Exception){
                 GlobalScope.launch(Dispatchers.Main) {
-                    message(e.toString())
+                    Log.i("connection","salut")
+                    //message(e.toString())
                 }
             }
         }
+
     }
 
     fun requette(laRequette:String){

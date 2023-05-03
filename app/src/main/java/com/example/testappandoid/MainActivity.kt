@@ -14,15 +14,18 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var comunication: Comunication
+    private lateinit var ip:String;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         comunication = Comunication(this)
-        intent.getStringExtra("ip")?.let { comunication.conection(it) }
+        intent.getStringExtra("ip")?.let {
+            comunication.conection(it)
+            ip = it
+        }
         Log.println(Log.INFO,"savoir si sa passe","savoir si sa passe MainActivity")
         construire()
-
 
     }
 
@@ -47,27 +50,8 @@ class MainActivity : AppCompatActivity() {
             val gridview = binding.gridview
             gridview.numColumns = comunication.DonnerAll.Donner.size / comunication.DonnerAll.line.toInt()
             Log.println(Log.INFO,"Donner","passe")
-            gridview.setAdapter(ImageAdapter(test,list,comunication))
+            gridview.setAdapter(ImageAdapter(test,list,comunication,ip))
             Log.println(Log.INFO,"Donner","passe")
         }
-            /*var marche = false
-            var i = 0
-            while (!marche){
-                var donner = Donner("http://192.168.1.17:8080/image/Games/Among-Us.png","test")
-                list.add(donner)
-                if (i>20){
-                    marche=true
-                }
-                //Log.println(Log.INFO,"Donner",comunication.DonnerAll.Donner[i].image + " " + comunication.DonnerAll.Donner[i].text)
-                Log.println(Log.INFO,"Donner",donner.image + " " + donner.text)
-                i++
-            }
-        val gridview = binding.gridview
-        gridview.numColumns = 10
-        Log.println(Log.INFO,"Donner","passe")
-        gridview.setAdapter(ImageAdapter(this,list))
-        Log.println(Log.INFO,"Donner","passe")*/
-
     }
-
 }

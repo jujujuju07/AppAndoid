@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.testappandoid.model.Donner
 
-class ImageAdapter constructor(private val context: Context, private val images: MutableList<Donner>, private val comunication: Comunication) :  BaseAdapter() {
+class ImageAdapter constructor(private val context: Context, private val images: MutableList<Donner>, private val comunication: Comunication, private var ip:String) :  BaseAdapter() {
 
     override fun getCount(): Int {
         return images.size
@@ -36,7 +36,7 @@ class ImageAdapter constructor(private val context: Context, private val images:
         val image = view!!.findViewById<ImageView>(R.id.imageView)
         val text : TextView = view!!.findViewById(R.id.textView)
 
-        Glide.with(context).load(images[position].image).into(image)
+        Glide.with(context).load("http://"+ip+images[position].image).into(image)
         Log.println(Log.INFO,"DonnerImage",images[position].image)
         image.setOnClickListener {
             Log.println(Log.INFO,"postion",position.toString())

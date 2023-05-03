@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         comunication = Comunication(this)
-        comunication.conection()
+        intent.getStringExtra("ip")?.let { comunication.conection(it) }
         Log.println(Log.INFO,"savoir si sa passe","savoir si sa passe MainActivity")
         construire()
 

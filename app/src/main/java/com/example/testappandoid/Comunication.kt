@@ -32,42 +32,11 @@ class Comunication(private var mainActivity: MainActivity) {
         this.binding = binding
     }
 
-    fun conection(){
-        GlobalScope.launch {
-            var message = "";
-            var connexion_multicast = false;
-            val multicastSocket = MulticastSocket(4446)
-
-            val multicastGroup = InetAddress.getByName("224.0.0.1")
-            multicastSocket.joinGroup(multicastGroup)
-
-            val buffer = ByteArray(1024)
-            val packet = DatagramPacket(buffer, buffer.size)
-            GlobalScope.launch {
-                Thread.sleep(5000)
-                if (!connexion_multicast){
-
-
-                    connection("10.0.0.109")
-                }
-            }
-
-            multicastSocket.receive(packet)
-            message = String(packet.data, 0, packet.length)
-            Log.i("ip",message + " " + packet.length + " " + message.length)
-            //println("Message reçu : $message")
-            connexion_multicast = true
-            connection(message)
-
-        }
-
-    }
-
-    fun connection(ip:String){
+    fun conection(ip:String){
         GlobalScope.launch {
 
             var port = 1222
-            var address = InetAddress.getByName("10.0.0.109")
+            var address = InetAddress.getByName(ip)
             try {
                 socket = Socket(address,port)
                 entre = BufferedReader(InputStreamReader(socket.getInputStream()))
@@ -87,6 +56,7 @@ class Comunication(private var mainActivity: MainActivity) {
         }
 
     }
+
 
     fun requette(laRequette:String){
         message(laRequette)

@@ -35,23 +35,29 @@ class MainActivity : AppCompatActivity() {
         Log.println(Log.INFO,"Donner","passe")
 
         GlobalScope.launch(Dispatchers.Main){
-            withContext(Dispatchers.IO) {
-                Thread.sleep(5000)
+            var donner = false
+            while (!donner){
+                if (comunication.donnerrecu){
+                    donner = true
+                    Log.println(Log.INFO,"Donner","passe")
+
+                    Log.println(Log.INFO,"line","test")
+                    Log.println(Log.INFO,"lineline",comunication.DonnerAll.line)
+                    Log.println(Log.INFO,"line","test")
+
+                    list = comunication.DonnerAll.Donner.toMutableList()
+
+                    val gridview = binding.gridview
+                    gridview.numColumns = comunication.DonnerAll.Donner.size / comunication.DonnerAll.line.toInt()
+                    Log.println(Log.INFO,"Donner","passe")
+                    gridview.setAdapter(ImageAdapter(test,list,comunication,ip))
+                    Log.println(Log.INFO,"Donner","passe")
+
+                }
+                withContext(Dispatchers.IO) {
+                    Thread.sleep(500)
+                }
             }
-            Thread.sleep(1000)
-            Log.println(Log.INFO,"Donner","passe")
-
-            Log.println(Log.INFO,"line","test")
-            Log.println(Log.INFO,"lineline",comunication.DonnerAll.line)
-            Log.println(Log.INFO,"line","test")
-
-            list = comunication.DonnerAll.Donner.toMutableList()
-
-            val gridview = binding.gridview
-            gridview.numColumns = comunication.DonnerAll.Donner.size / comunication.DonnerAll.line.toInt()
-            Log.println(Log.INFO,"Donner","passe")
-            gridview.setAdapter(ImageAdapter(test,list,comunication,ip))
-            Log.println(Log.INFO,"Donner","passe")
         }
     }
 }

@@ -27,6 +27,7 @@ class Comunication(private var mainActivity: MainActivity) {
     var marche = false
     private lateinit var binding: ActivityMainBinding
     lateinit var DonnerAll : Structure
+    var donnerrecu = false
 
     fun binding(binding: ActivityMainBinding){
         this.binding = binding
@@ -85,6 +86,7 @@ class Comunication(private var mainActivity: MainActivity) {
                 var test = listOf<Donner>()
                 DonnerAll = Structure(test,"")
                 DonnerAll = gson.fromJson(message,DonnerAll.javaClass)
+                donnerrecu = true
             }catch (e:Exception){
                 Log.println(Log.INFO,"tag",e.message.toString())
             }

@@ -35,10 +35,8 @@ class MainActivity : AppCompatActivity() {
         Log.println(Log.INFO,"Donner","passe")
 
         GlobalScope.launch(Dispatchers.Main){
-            var donner = false
-            while (!donner){
+            while (true){
                 if (comunication.donnerrecu){
-                    donner = true
                     Log.println(Log.INFO,"Donner","passe")
 
                     Log.println(Log.INFO,"line","test")
@@ -52,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                     Log.println(Log.INFO,"Donner","passe")
                     gridview.setAdapter(ImageAdapter(test,list,comunication,ip))
                     Log.println(Log.INFO,"Donner","passe")
-
+                    comunication.donnerrecu = false
                 }
                 withContext(Dispatchers.IO) {
                     Thread.sleep(500)

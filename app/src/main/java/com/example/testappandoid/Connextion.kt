@@ -31,6 +31,11 @@ class Connextion : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        conection()
+    }
+
     private fun conection(){
 
         var message = ""

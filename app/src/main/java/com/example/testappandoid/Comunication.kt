@@ -71,6 +71,7 @@ class Comunication(private var mainActivity: MainActivity) {
             while (marche){
                 var requette = entre.readLine()
                 GlobalScope.launch(Dispatchers.Main) {
+                    Log.i("reponse",requette)
                     message(requette)
 
                 }

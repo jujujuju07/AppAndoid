@@ -58,4 +58,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    fun fin(){
+        finish()
+    }
 }

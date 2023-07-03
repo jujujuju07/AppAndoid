@@ -1,6 +1,5 @@
 package com.example.testappandoid
 
-import android.content.Intent
 import android.util.Log
 import com.example.testappandoid.databinding.ActivityMainBinding
 import com.example.testappandoid.model.Donner
@@ -10,14 +9,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
-import java.io.IOException
 import java.io.InputStreamReader
 import java.io.PrintStream
-import java.net.DatagramPacket
 import java.net.InetAddress
-import java.net.MulticastSocket
 import java.net.Socket
-import javax.security.auth.login.LoginException
+import kotlin.system.exitProcess
 
 
 class Comunication(private var mainActivity: MainActivity) {
@@ -46,12 +42,10 @@ class Comunication(private var mainActivity: MainActivity) {
                     socket(socket,entre,sortie)
                 }
                 marche = true
-                //conect = true
 
             }catch (e:Exception){
                 GlobalScope.launch(Dispatchers.Main) {
                     Log.i("connection","salut")
-                    //message(e.toString())
                 }
             }
         }
@@ -69,11 +63,19 @@ class Comunication(private var mainActivity: MainActivity) {
     fun run(){
         GlobalScope.launch {
             while (marche){
-                var requette = entre.readLine()
-                GlobalScope.launch(Dispatchers.Main) {
-                    Log.i("reponse",requette)
-                    message(requette)
-
+                try {
+                    var requette = entre.readLine()
+                    GlobalScope.launch(Dispatchers.Main) {
+                        Log.i("reponse",requette)
+                        if (requette != "exit"){
+                            message(requette)
+                        }else{
+                            mainActivity.fin()
+                        }
+                    }
+                }catch (e: Exception){
+                    Log.e(e.cause.toString(), e.message.toString())
+                    marche = false
                 }
             }
         }

@@ -27,7 +27,6 @@ class Connextion : AppCompatActivity() {
             it.context.startActivity(intent)
         }
 
-        conection()
 
     }
 
@@ -37,25 +36,21 @@ class Connextion : AppCompatActivity() {
     }
 
     private fun conection(){
-
-        var message = ""
-        var connexion_multicast = false;
-        val multicastSocket = MulticastSocket(4446)
-
-        val multicastGroup = InetAddress.getByName("224.0.0.107")
-        multicastSocket.joinGroup(multicastGroup)
-
-        val buffer = ByteArray(1024)
-        val packet = DatagramPacket(buffer, buffer.size)
         GlobalScope.launch(Dispatchers.IO){
+            var message: String
+            val multicastSocket = MulticastSocket(4446)
+
+            val multicastGroup = InetAddress.getByName("224.0.0.107")
+            multicastSocket.joinGroup(multicastGroup)
+
+            val buffer = ByteArray(1024)
+            val packet = DatagramPacket(buffer, buffer.size)
             Log.i("salut","salut")
             multicastSocket.receive(packet)
             message = String(packet.data, 0, packet.length)
             Log.i("ip",message + " " + packet.length + " " + message.length)
-            //println("Message reçu : $message")
-            connexion_multicast = true
+            multicastSocket.leaveGroup(multicastGroup)
             GlobalScope.launch(Dispatchers.Main){
-
                 val intent = Intent(this@Connextion, MainActivity::class.java)
                 intent.putExtra("ip",message)
                 startActivity(intent)
